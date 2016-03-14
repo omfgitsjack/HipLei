@@ -1,0 +1,14 @@
+{
+  "firebase": "hiplei",
+  "public": "public",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ],
+  "rules": "scripts/security-rules.json",
+  "rewrites": [ {
+	"source": "**",
+	"destination": "/index.html"
+	} ]
+}

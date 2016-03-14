@@ -1,0 +1,39 @@
+// These are your firebase security rules - put then in the "Security & Rules" tab of your 
+{
+    "rules": {
+        // won't let people delete an existing room
+        ".write": "false",
+        ".read": false,
+        "users" : {
+          ".read": true,
+          "$user_id": {
+            ".read": true,
+            ".write": "$user_id === auth.uid",
+            "chat": {
+              ".read": true,
+              ".write": true
+            },
+            "u18": {
+              ".read": true,
+              ".write": true
+            }
+          }
+        },
+        "linkedin": {
+          ".read": false,
+          ".write": "!data.exists() || !newData.exists()",
+          "$user": {
+            ".read": true,
+            ".write": false
+          }
+        },
+        "chat-messages": {
+          ".read": true,
+          ".write": true,
+          "$chat": {
+              ".indexOn": ["timestamp"]
+          }
+        }
+    }
+}
+
