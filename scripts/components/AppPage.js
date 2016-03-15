@@ -66,20 +66,20 @@ class AppPage extends React.Component {
 	}
 }
 
-function convertToInt(fields) {
+function convertToFloat(fields) {
 	let obj = {}
 	for (var prop in fields) {
 		if (fields.hasOwnProperty(prop)) {
-			obj[prop] = parseInt((fields[prop]))
+			obj[prop] = parseFloat((fields[prop]))
 		}
 	}
 	return obj
 }
 
 function calculateStrat1(fields) {
-	let f = convertToInt(fields)
-	let calc1 = 2*f.A + 2*f.B + f.stickAmount * f.stick + f.clipAmount * f.clip + f.tearAmount * f.tear
-	let calc2 = 2*f.B + f.C + f.toungueAmount * f.toungue + f.clipAmount * f.clip + f.tearAmount * f.tear + f.backAmount * f.back
+	let f = convertToFloat(fields)
+	let calc1 = 2*f.A + 2*f.B + f.stickAmount * f.stick + f.clipAmount * f.clip + f.horizontalTearAmount * f.horizontalTear
+	let calc2 = 2*f.B + f.C + f.toungueAmount * f.toungue + f.clipAmount * f.clip + f.verticalTearAmount * f.verticalTear + f.backAmount * f.back
 
 	let surfaceArea = calc1 * calc2
 	
@@ -87,7 +87,7 @@ function calculateStrat1(fields) {
 }
 
 function calculateStrat2(fields) {
-	let f = convertToInt(fields)
+	let f = convertToFloat(fields)
 
 	let surfaceArea = (2*f.A + f.stick + f.tear) * f.B
 	
@@ -95,7 +95,7 @@ function calculateStrat2(fields) {
 }
 
 function calculateStrat3(fields) {
-	let f = convertToInt(fields)
+	let f = convertToFloat(fields)
 	let calc1 = ((f.diameter * Math.PI) + f.stickAmount * f.stick + f.tearAmount * f.tear) * (f.height + f.tearAmount * f.tearAmount + f.roll),
 	calc2 = ((f.diameter * Math.PI) + f.stickAmount * f.stick) * (f.height + f.rollAmount * f.roll)
 
