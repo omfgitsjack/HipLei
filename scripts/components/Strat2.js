@@ -30,12 +30,12 @@ class Strat2 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.stick}
-						floatingLabelText="Stick"
+						floatingLabelText="黏邊位 (Stick)"
 						/>
 					<TextField
 						className="text-field"
 						{...fields.tear}
-						floatingLabelText="Tear"
+						floatingLabelText="撕邊位 (Tear)"
 						/>
 				</div>
 				<RaisedButton

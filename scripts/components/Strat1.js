@@ -41,10 +41,10 @@ class Strat1 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.stick}
-						floatingLabelText="Stick"
+						floatingLabelText="黏邊位 (Stick)"
 						/>
 					<div className="text-field">
-						<SelectField floatingLabelText="Amount of Stick" 
+						<SelectField floatingLabelText="黏邊位數量 (Amount of Stick)" 
 							value={fields.stickAmount.value}
 							onChange={ (ev, index, value) => 
 								{ fields.stickAmount.onChange(value) } }>
@@ -56,11 +56,11 @@ class Strat1 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.verticalTear}
-						floatingLabelText="Vertical Tear"
+						floatingLabelText="右邊撕邊位 (Vertical Tear)"
 						defaultValue="0.25"
 						/>
 					<div className="text-field">
-						<SelectField floatingLabelText="Amount of Vertical Tear" 
+						<SelectField floatingLabelText="右邊撕邊位數量 (Amt of Vert Tear)" 
 							value={fields.verticalTearAmount.value}
 							onChange={ (ev, index, value) => 
 								{ fields.verticalTearAmount.onChange(value) } }>
@@ -72,11 +72,11 @@ class Strat1 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.horizontalTear}
-						floatingLabelText="Horizontal Tear"
+						floatingLabelText="左邊撕邊位 (Horizontal Tear)"
 						defaultValue="0.375"
 						/>
 					<div className="text-field">
-						<SelectField floatingLabelText="Amount of Horizontal Tear" 
+						<SelectField floatingLabelText="左邊撕邊位數量 (Amt of Horiz Tear)"
 							value={fields.horizontalTearAmount.value}
 							onChange={ (ev, index, value) => 
 								{ fields.horizontalTearAmount.onChange(value) } }>
@@ -88,11 +88,11 @@ class Strat1 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.clip}
-						floatingLabelText="Clip"
+						floatingLabelText="夾位 (Clip)"
 						defaultValue="0.5"
 						/>
 					<div className="text-field">
-						<SelectField floatingLabelText="Amount of Clip" 
+						<SelectField floatingLabelText="夾位數量 (Amount of Clip)" 
 							value={fields.clipAmount.value}
 							onChange={ (ev, index, value) => 
 								{ fields.clipAmount.onChange(value) } }>
@@ -104,11 +104,11 @@ class Strat1 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.toungue}
-						floatingLabelText="Toungue"
+						floatingLabelText="脷仔 (Toungue)"
 						defaultValue="0.5"
 						/>
 					<div className="text-field">
-						<SelectField floatingLabelText="Amount of Toungue" 
+						<SelectField floatingLabelText="脷仔數量 (Amount of Toungue)" 
 							value={fields.toungueAmount.value}
 							onChange={ (ev, index, value) => 
 								{ fields.toungueAmount.onChange(value) } }>
@@ -120,10 +120,10 @@ class Strat1 extends React.Component {
 					<TextField
 						className="text-field"
 						{...fields.back}
-						floatingLabelText="Back"
+						floatingLabelText="扣背 (Back)"
 						/>
 					<div className="text-field">
-						<SelectField floatingLabelText="Amount of Back" 
+						<SelectField floatingLabelText="扣背數量 (Amount of Back)" 
 							value={fields.backAmount.value}
 							onChange={ (ev, index, value) => 
 								{ fields.backAmount.onChange(value) } }>

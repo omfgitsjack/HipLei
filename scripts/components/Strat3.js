@@ -20,42 +20,42 @@ class Strat3 extends React.Component {
 				<TextField
 					className="text-field"
 					{...fields.diameter}
-					floatingLabelText="Diameter"
+					floatingLabelText="直徑 (Diameter)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.height}
-					floatingLabelText="Height"
+					floatingLabelText="高 (Height)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.stick}
-					floatingLabelText="Stick"
+					floatingLabelText="黏邊位 (Stick)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.stickAmount}
-					floatingLabelText="Amount of Stick"
+					floatingLabelText="黏邊位數量 (Amount of Stick)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.tear}
-					floatingLabelText="Tear"
+					floatingLabelText="撕邊位 (Tear)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.tearAmount}
-					floatingLabelText="Amount of Tear"
+					floatingLabelText="撕邊位數量 (Amount of Tear)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.roll}
-					floatingLabelText="roll"
+					floatingLabelText="卷邊 (roll)"
 					/>
 				<TextField
 					className="text-field"
 					{...fields.rollAmount}
-					floatingLabelText="Amount of Roll"
+					floatingLabelText="卷邊數量 (Amount of Roll)"
 					/>
 				</div>
 				<RaisedButton
