@@ -15,8 +15,8 @@ function convertToFloat(fields) {
 
 export function calculateStrat1(fields) {
 	let f = convertToFloat(fields)
-	let horiz = 2*toInch(f.A) + 2*toInch(f.B) + f.stickAmount * f.stick + f.horizontalTearAmount * f.horizontalTear + toInch(f.other) * f.otherAmount
-	let vert = toInch(2*f.B) + toInch(f.C) + f.toungueAmount * f.toungue + f.clipAmount * f.clip + f.verticalTearAmount * f.verticalTear + f.backAmount * toInch(f.back) + toInch(f.other) * f.otherAmount
+	let horiz = 2*toInch(f.A) + 2*toInch(f.B) + f.stickAmount * f.stick + f.horizontalTearAmount * f.horizontalTear + toInch(f.horizontalOther) * f.horizontalOtherAmount
+	let vert = toInch(2*f.B) + toInch(f.C) + f.toungueAmount * f.toungue + f.clipAmount * f.clip + f.verticalTearAmount * f.verticalTear + f.backAmount * toInch(f.back) + toInch(f.verticalOther) * f.verticalOtherAmount
 
 	let surfaceArea = horiz * vert
 	
@@ -26,8 +26,8 @@ export function calculateStrat1(fields) {
 export function calculateStrat2(fields) {
 	let f = convertToFloat(fields)
 
-	let horiz = 2*toInch(f.A) + f.stick * f.stickAmount + f.horizontalTear * f.horizontalTearAmount + toInch(f.other) * f.otherAmount
-	let vert = toInch(f.B) + toInch(f.C) + f.clip * f.clipAmount + f.verticalTear * f.verticalTearAmount + toInch(f.other) * f.otherAmount
+	let horiz = 2*toInch(f.A) + f.stick * f.stickAmount + f.horizontalTear * f.horizontalTearAmount + toInch(f.horizontalOther) * f.horizontalOtherAmount
+	let vert = toInch(f.B) + toInch(f.C) + f.clip * f.clipAmount + f.verticalTear * f.verticalTearAmount + toInch(f.verticalOther) * f.verticalOtherAmount
 	let surfaceArea = horiz * vert
 	
 	return { surfaceArea: surfaceArea, horizontal: horiz, vertical: vert }
@@ -40,8 +40,8 @@ export function calculateStrat3(fields) {
 	let vert = f.height + f.roll * f.rollAmount + f.verticalTear + f.clip
 
 	let body = horiz * vert
-	let base = 2 * f.diameter 
-	let lid = f.diameter * Math.PI + f.roll
+	let base = 2 * f.diameter + toInch(f.baseOther) * f.baseOtherAmount
+	let lid = f.diameter * Math.PI + f.roll + toInch(f.lidOther) * f.lidOtherAmount
 	
 	return { surfaceArea: body + base + lid, body: body, base: base, lid: lid}
 }
