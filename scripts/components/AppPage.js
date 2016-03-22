@@ -4,6 +4,8 @@ import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { pushPath } from 'redux-simple-router'
 
+// Services
+import { calculateStrat1, calculateStrat2, calculateStrat3} from '../services/SACalculator'
 
 // Ui Components
 import Snackbar from 'material-ui/lib/snackbar';
@@ -14,10 +16,13 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
 
+// Custom Components
 import Strat1 from './Strat1'
 import Strat2 from './Strat2'
 import Strat3 from './Strat3'
+import ResultsArea from './ResultsArea'
 
+// Theme
 import MyRawTheme from '../utilities/RockstarMaterialTheme';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
@@ -57,51 +62,13 @@ class AppPage extends React.Component {
 					<Tab label="蘋果批" style={style.tab} onClick={this.resetCalculation}>
 						<Strat2 {...Strat2.fields} onSubmit={this.handleStratSubmit.bind(this, calculateStrat2)}/>
 					</Tab>
-					<Tab label="圓柱" style={style.tab} onClick={this.resetCalculation}>
+					<Tab label="圆筒" style={style.tab} onClick={this.resetCalculation}>
 						<Strat3 {...Strat3.fields} onSubmit={this.handleStratSubmit.bind(this, calculateStrat3)}/>
 					</Tab>					
 				</Tabs>
-				{this.state.calculation ? <h4 style={style.header}>Result: {this.state.calculation}</h4> : undefined}
+				<ResultsArea {...this.state.calculation} showWork={true}/>
 			</div>)
 	}
-}
-
-function convertToFloat(fields) {
-	let obj = {}
-	for (var prop in fields) {
-		if (fields.hasOwnProperty(prop)) {
-			obj[prop] = parseFloat((fields[prop]))
-		}
-	}
-	return obj
-}
-
-function calculateStrat1(fields) {
-	let f = convertToFloat(fields)
-	let calc1 = 2*f.A + 2*f.B + f.stickAmount * f.stick + f.clipAmount * f.clip + f.horizontalTearAmount * f.horizontalTear
-	let calc2 = 2*f.B + f.C + f.toungueAmount * f.toungue + f.clipAmount * f.clip + f.verticalTearAmount * f.verticalTear + f.backAmount * f.back
-
-	let surfaceArea = calc1 * calc2
-	
-	return surfaceArea
-}
-
-function calculateStrat2(fields) {
-	let f = convertToFloat(fields)
-
-	let surfaceArea = (2*f.A + f.stick + f.tear) * f.B
-	
-	return surfaceArea
-}
-
-function calculateStrat3(fields) {
-	let f = convertToFloat(fields)
-	let calc1 = ((f.diameter * Math.PI) + f.stickAmount * f.stick + f.tearAmount * f.tear) * (f.height + f.tearAmount * f.tearAmount + f.roll),
-	calc2 = ((f.diameter * Math.PI) + f.stickAmount * f.stick) * (f.height + f.rollAmount * f.roll)
-
-	let surfaceArea = calc1 + calc2
-	
-	return surfaceArea
 }
 
 const style = {
