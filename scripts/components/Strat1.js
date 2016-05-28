@@ -173,7 +173,7 @@ const fields = {
 	'horizontalTearAmount': 2,
 	'horizontalTear': 0.375,
 	'toungue': 0.5,
-	'toungueAmount': 1,
+	'toungueAmount': 2,
 	'back': 0,
 	'backAmount': 0,
 	'verticalOther': 0,

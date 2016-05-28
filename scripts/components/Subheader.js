@@ -8,7 +8,7 @@ class Subheader extends React.Component {
 
 	render() {
 		return (
-			<div className="subheader">
+			<div className="subheader" style={this.props.style}>
 				{this.props.title}
 			</div>);
 	}

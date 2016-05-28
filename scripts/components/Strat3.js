@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form'
 
 import Paper from 'material-ui/lib/paper';
 import TextField from 'material-ui/lib/text-field';
+import Divider from 'material-ui/lib/divider'
 import SelectField from './HLSelectField';
 import RaisedButton from 'material-ui/lib/raised-button';
 
@@ -33,7 +34,7 @@ class Strat3 extends React.Component {
 
 	renderBodyVerticalFormula(fields) {
 		return (<div className="form">
-			<Subheader title="垂直筒身"></Subheader>
+			<Subheader title="通道"></Subheader>
 			<TextField
 				className="text-field"
 				{...fields.roll}
@@ -60,7 +61,7 @@ class Strat3 extends React.Component {
 
 	renderBodyHorizontalFormula(fields) {
 		return (<div className="form">
-			<Subheader title="橫筒身"></Subheader>
+			<Subheader title="橫"></Subheader>
 			<TextField
 				className="text-field"
 				{...fields.stick}
@@ -134,6 +135,7 @@ class Strat3 extends React.Component {
 		return (
 			<Paper className="content-area">
 				{this.renderHB(fields)}
+				<Subheader title="筒身" style={{ fontSize: "20px", marginTop: '15px'}}></Subheader>
 				{this.renderBodyHorizontalFormula(fields)}
 				{this.renderBodyVerticalFormula(fields)}
 				{this.renderBaseFormula(fields)}

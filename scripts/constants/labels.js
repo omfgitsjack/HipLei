@@ -13,7 +13,7 @@ export const HEIGHT = "高 (Height)"
 export const LIDLENGTH = "蓋長度"
 export const ROLL = "卷邊 (roll)"
 
-export const VERTICAL = "垂直 (Vertical)"
+export const VERTICAL = "通道 (Vertical)"
 export const HORIZONTAL = "橫 (Horizontal)"
 export const AMOUNT = "數量"
 export const BODY = "筒身 (Body)"
