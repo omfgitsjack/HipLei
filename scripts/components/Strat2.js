@@ -1,10 +1,10 @@
 import React from 'react';
 import { reduxForm } from 'redux-form'
 
-import Paper from 'material-ui/lib/paper';
-import TextField from 'material-ui/lib/text-field';
-import SelectField from './HLSelectField';
-import RaisedButton from 'material-ui/lib/raised-button';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import HLSelectField from './HLSelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import Subheader from './Subheader'
 import * as labels from '../constants/labels'
@@ -46,22 +46,22 @@ class Strat2 extends React.Component {
 					{...fields.stick}
 					floatingLabelText={labels.STICK}
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT} 
+				<HLSelectField floatingLabelText={labels.AMOUNT} 
 					value={fields.stickAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.stickAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.horizontalTear}
 					floatingLabelText={labels.TEAR}
 					defaultValue="0.375"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT}
+				<HLSelectField floatingLabelText={labels.AMOUNT}
 					value={fields.horizontalTearAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.horizontalTearAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.horizontalOther}
@@ -87,22 +87,22 @@ class Strat2 extends React.Component {
 					floatingLabelText={labels.CLIP}
 					defaultValue="0.5"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT} 
+				<HLSelectField floatingLabelText={labels.AMOUNT} 
 					value={fields.clipAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.clipAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.verticalTear}
 					floatingLabelText={labels.TEAR}
 					defaultValue="0.375"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT}
+				<HLSelectField floatingLabelText={labels.AMOUNT}
 					value={fields.verticalTearAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.verticalTearAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.verticalOther}

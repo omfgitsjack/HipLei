@@ -1,19 +1,27 @@
 import React from 'react';
 import { reduxForm } from 'redux-form'
 
-import Paper from 'material-ui/lib/paper';
-import TextField from 'material-ui/lib/text-field';
-import SelectField from './HLSelectField';
-import RaisedButton from 'material-ui/lib/raised-button';
+import HLSelectField from './HLSelectField';
+
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import MenuItem from 'material-ui/MenuItem';
+import SelectField from 'material-ui/SelectField';
 
 import Subheader from './Subheader'
 
 import * as labels from '../constants/labels'
+import thickness from '../constants/thickness'
+
 
 class Strat1 extends React.Component {
 	constructor(props) {
 		super(props);
 		this.displayName = 'Strat1';
+		this.state = {
+			value: 1
+		}
 	}
 
 	renderABC(fields) {
@@ -46,22 +54,22 @@ class Strat1 extends React.Component {
 					{...fields.stick}
 					floatingLabelText={labels.STICK}
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT} 
+				<HLSelectField floatingLabelText={labels.AMOUNT} 
 					value={fields.stickAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.stickAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.horizontalTear}
 					floatingLabelText={labels.TEAR}
 					defaultValue="0.375"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT}
+				<HLSelectField floatingLabelText={labels.AMOUNT}
 					value={fields.horizontalTearAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.horizontalTearAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.horizontalOther}
@@ -87,43 +95,43 @@ class Strat1 extends React.Component {
 					floatingLabelText={labels.TOUNGUE}
 					defaultValue="0.5"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT} 
+				<HLSelectField floatingLabelText={labels.AMOUNT} 
 					value={fields.toungueAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.toungueAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.clip}
 					floatingLabelText={labels.CLIP}
 					defaultValue="0.5"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT} 
+				<HLSelectField floatingLabelText={labels.AMOUNT} 
 					value={fields.clipAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.clipAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 						className="text-field"
 						{...fields.back}
 						floatingLabelText={labels.BACK}
 						/>
-					<SelectField floatingLabelText={labels.AMOUNT} 
+					<HLSelectField floatingLabelText={labels.AMOUNT} 
 						value={fields.backAmount.value}
 						onChange={ (ev, index, value) => 
 							{ fields.backAmount.onChange(value) } }>
-					</SelectField>
+					</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.verticalTear}
 					floatingLabelText={labels.TEAR}
 					defaultValue="0.375"
 					/>
-				<SelectField floatingLabelText={labels.AMOUNT}
+				<HLSelectField floatingLabelText={labels.AMOUNT}
 					value={fields.verticalTearAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.verticalTearAmount.onChange(value) } }>
-				</SelectField>
+				</HLSelectField>
 				<TextField
 					className="text-field"
 					{...fields.verticalOther}
@@ -139,6 +147,53 @@ class Strat1 extends React.Component {
 			</div>)
 	}
 
+	hideThicknessField(fields) {
+		return !fields.material.value || fields.material.value === "PP1" || fields.material.value === "PP1"
+	}
+
+	renderMaterialArea(fields) {
+
+		let materials = this.props.materials
+
+		let onChangeMaterial = (ev, index, value) => {
+			fields.material.onChange(value)
+			// change the default thickness
+			fields.thickness.onChange(JSON.stringify(materials[index][1].thickness))
+		}
+
+		return (
+			<div className="form">
+				<Subheader title="材料"></Subheader>
+				<div className="text-field">
+					<SelectField floatingLabelText="材料"
+						value={fields.material.value}
+						onChange={onChangeMaterial}>
+						{
+							this.props.materials.map(([key, {category, price, thickness, description}]) => {
+								return <MenuItem primaryText={description} value={key} key={key}/>
+							})
+						}
+					</SelectField>
+				</div>
+				{	
+					this.hideThicknessField(fields) ? undefined : (
+					<div className="text-field">
+						<SelectField floatingLabelText="料厚"
+							value={fields.thickness.value}
+							onChange={(ev, index, value) => { fields.thickness.onChange(value) }}>
+							{
+								_.pairs(thickness).map(([thickness, inches]) => {
+									return <MenuItem primaryText={thickness} value={thickness} key={thickness}></MenuItem>
+								})
+							}
+						</SelectField>
+					</div>)
+				}
+			</div>)
+	}
+
+	handleChange = (event, index, value) => this.setState({value});
+
 	render() {
 		let { fields, handleSubmit } = this.props
 
@@ -147,6 +202,8 @@ class Strat1 extends React.Component {
 				{this.renderABC(fields)}
 				{this.renderHorizontalFormula(fields)}
 				{this.renderVerticalFormula(fields)}
+				{this.renderMaterialArea(fields)}
+				        
 				<RaisedButton
 					label="Calculate"
 					className="submission-button"
@@ -179,7 +236,9 @@ const fields = {
 	'verticalOther': 0,
 	'verticalOtherAmount': 1,
 	'horizontalOther': 0,
-	'horizontalOtherAmount': 1
+	'horizontalOtherAmount': 1,
+	'material': undefined,
+	'thickness': undefined
 }
 
 export default reduxForm({

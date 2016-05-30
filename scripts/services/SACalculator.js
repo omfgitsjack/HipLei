@@ -1,4 +1,6 @@
 
+import materials from '../constants/materials'
+
 function toInch(cm) {
 	return cm/2.54
 }
@@ -20,16 +22,23 @@ export function calculateStrat1(fields) {
 	
 	let thickness = f.thickness
 	let surfaceArea = horiz * vert
-	
+	let material = f.material
+	let amount = thickness ? thickness / surfaceArea : 1
+	let priceOfMaterial = materials[material].price
+	let other = 0
+
 	// based on material, the amount that we can make differs, some are static
 	// Some are variable.
 
+	// If it's PP this will be different.
 	return { 
 		surfaceArea: surfaceArea,
 		horizontal: horiz, 
 		vertical: vert, 
 		thickness: thickness,
-		amount: thickness ? thickness / surfaceArea : 1
+		amount: amount,
+		remainder: priceOfMaterial / amount,
+		total: remainder + other
 	}
 }
 

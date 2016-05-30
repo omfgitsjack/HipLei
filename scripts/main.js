@@ -9,6 +9,12 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // Components
 import AppPage from './components/AppPage';
 
+// Theming
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import RockstarTheme from './utilities/RockstarMaterialTheme';
+const muiTheme = getMuiTheme(RockstarTheme)
+
 import configureStore from './store/configureStore'
 
 const store = configureStore()
@@ -24,12 +30,14 @@ injectTapEventPlugin();
   Routes
 */
 var routes = (
-	<Provider store={store}>
-		<Router history={history}>
-			<Route path="/" component={AppPage}>
-			</Route>
-		</Router>
-  	</Provider>
+	<MuiThemeProvider muiTheme={muiTheme}>
+		<Provider store={store}>
+			<Router history={history}>
+				<Route path="/" component={AppPage}>
+				</Route>
+			</Router>
+	  	</Provider>
+	  </MuiThemeProvider>
 )
 
 ReactDOM.render(routes, document.querySelector('#main'));

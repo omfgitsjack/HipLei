@@ -1,11 +1,11 @@
 import React from 'react';
 import { reduxForm } from 'redux-form'
 
-import Paper from 'material-ui/lib/paper';
-import TextField from 'material-ui/lib/text-field';
-import Divider from 'material-ui/lib/divider'
-import SelectField from './HLSelectField';
-import RaisedButton from 'material-ui/lib/raised-button';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import HLSelectField from './HLSelectField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import Subheader from './Subheader'
 import * as labels from '../constants/labels'
@@ -39,7 +39,7 @@ class Strat3 extends React.Component {
 				className="text-field"
 				{...fields.roll}
 				floatingLabelText={labels.ROLL} />
-			<SelectField floatingLabelText={labels.AMOUNT}
+			<HLSelectField floatingLabelText={labels.AMOUNT}
 					value={fields.rollAmount.value}
 					onChange={ (ev, index, value) => 
 						{ fields.rollAmount.onChange(value) } }>
@@ -55,7 +55,7 @@ class Strat3 extends React.Component {
 				floatingLabelText={labels.CLIP}
 				defaultValue="0.5"
 				/>
-			</SelectField>
+			</HLSelectField>
 		</div>)
 	}
 
@@ -73,11 +73,11 @@ class Strat3 extends React.Component {
 				floatingLabelText={labels.TEAR}
 				defaultValue="0.375"
 				/>
-			<SelectField floatingLabelText={labels.AMOUNT}
+			<HLSelectField floatingLabelText={labels.AMOUNT}
 				value={fields.horizontalTearAmount.value}
 				onChange={ (ev, index, value) => 
 					{ fields.horizontalTearAmount.onChange(value) } }>
-			</SelectField>
+			</HLSelectField>
 		</div>)
 	}
 

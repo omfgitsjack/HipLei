@@ -1,5 +1,5 @@
-export default function thicknessToSurfaceArea(thickness) {
-	switch(thickness): {
+export default function(thickness) {
+	switch(thickness) {
 		case 7: return 2700
 		case 8: return 2363
 		case 9: return 2100
