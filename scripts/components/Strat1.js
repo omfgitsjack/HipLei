@@ -3,6 +3,7 @@ import { reduxForm } from 'redux-form'
 
 import HLSelectField from './HLSelectField';
 
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -200,9 +201,19 @@ class Strat1 extends React.Component {
 		return (
 			<Paper className="content-area">
 				{this.renderABC(fields)}
-				{this.renderHorizontalFormula(fields)}
-				{this.renderVerticalFormula(fields)}
 				{this.renderMaterialArea(fields)}
+				<Card>
+					<CardHeader
+						title="Show Details"
+						subtitle="Caluclations & Defaults"
+						actAsExpander={true}
+						showExpandableButton={true}>
+					</CardHeader>
+					<CardText expandable={true}>
+						{this.renderHorizontalFormula(fields)}
+						{this.renderVerticalFormula(fields)}	
+					</CardText>
+				</Card>
 				        
 				<RaisedButton
 					label="Calculate"

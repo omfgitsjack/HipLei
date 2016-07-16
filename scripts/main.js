@@ -8,6 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Components
 import AppPage from './components/AppPage';
+import SamplePage from './components/SamplePage';
 
 // Theming
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -35,6 +36,9 @@ var routes = (
 			<Router history={history}>
 				<Route path="/" component={AppPage}>
 				</Route>
+				<Route path="/sample" component={SamplePage}>
+				</Route>
+
 			</Router>
 	  	</Provider>
 	  </MuiThemeProvider>

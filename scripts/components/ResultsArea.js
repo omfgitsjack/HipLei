@@ -36,6 +36,7 @@ class ResultsArea extends React.Component {
 				<Paper className="results-area">
 					<h4 style={{marginTop: '0'}}>總面積: {this.props.surfaceArea}</h4>
 					<h4 style={{marginTop: '0'}}>每磅料可做盒: {this.props.amount}</h4>
+					<h4 style={{marginTop: '0'}}>每個盒淨料錢: {this.props.remainder}</h4>
 					{this.renderWork(this.props)}
 				</Paper>);
 		} else {

@@ -87,7 +87,7 @@ const style = {
 		textAlign: 'center'
 	},
 	tabs: {
-		maxWidth: '593px',
+		maxWidth: '633px',
 		margin: '0 auto'
 	},
 	tab: {
