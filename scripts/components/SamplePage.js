@@ -11,6 +11,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import thickness from '../constants/thickness'
 import thicknessToSurfaceArea from '../services/thicknessToSurfaceArea'
 
+import moment from 'moment'
+
 function convertToFloat(fields) {
 	let obj = {}
 	for (var prop in fields) {
@@ -39,12 +41,20 @@ class SamplePage extends React.Component {
 			totalH = (w * 2) + h + 2,
 			totalSA = totalL * totalH
 
-		return totalSA
+		return {
+			lInch: l,
+			wInch: w,
+			hInch: h,
+			totalL: totalL,
+			totalH: totalH,
+			totalSA: totalSA
+		}
 	}
 
 	calculatePrice(fields) {
 		let f = convertToFloat(fields),
-			sa = this.calculateSA(f),
+			saDetails = this.calculateSA(f),
+			sa = saDetails.totalSA,
 			thicknessPerSquareFt = thicknessToSurfaceArea(f.thickness),
 			pricePerLb = 5.8,
 			numberOfBoxesPerLbOfMaterial = thicknessPerSquareFt / sa,
@@ -58,18 +68,135 @@ class SamplePage extends React.Component {
 
 		let totalCostPerBox = costPerBox + 啤粘 + 印刷 + 专色 + 丝印 + 烫金
 
-		return totalCostPerBox
+		return {
+			thicknessPerSquareFt: thicknessPerSquareFt,
+			numberOfBoxesPerLbOfMaterial: numberOfBoxesPerLbOfMaterial,
+			costPerBox: costPerBox,
+			totalCostPerBox: totalCostPerBox,
+			pricePerLb: pricePerLb,
+			...saDetails
+		}
 	}
 
 	roundToCurrency(val) {
 		return Math.round(val * 100) / 100
 	}
 
+	renderResultsArea(fields) {
+		let calc = this.calculatePrice(fields)
+
+		return <div className="alternate-block">
+			<h3 className="muted centered">Calculations</h3>
+			<div className="form">
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.lInch) || undefined}
+					floatingLabelText="長 (inch)"
+					underlined={false}
+					disabled={true}
+					/>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.wInch) || undefined}
+					floatingLabelText="闊 (inch)"
+					underlined={false}
+					disabled={true}
+					/>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.hInch) || undefined}
+					floatingLabelText="高 (inch)"
+					underlined={false}
+					disabled={true}
+					/>
+			</div>
+			<div className="form">
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.totalL) || undefined}
+					floatingLabelText="周長"
+					underlined={false}
+					disabled={true}
+					/>
+				<span className="calculation-style">X</span>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.totalH) || undefined}
+					floatingLabelText="總髙"
+					underlined={false}
+					disabled={true}
+					/>
+				<span className="calculation-style">=</span>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.totalSA) || undefined}
+					floatingLabelText="總面積"
+					underlined={false}
+					disabled={true}
+					/>
+			</div>
+			<div className="form">
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.thicknessPerSquareFt) || undefined}
+					floatingLabelText="料厚 (平方寸)"
+					underlined={false}
+					disabled={true}
+					/>
+				<span className="calculation-style">/</span>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.totalSA) || undefined}
+					floatingLabelText="盒面積"
+					underlined={false}
+					disabled={true}
+					/>
+				<span className="calculation-style">=</span>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.numberOfBoxesPerLbOfMaterial) || undefined}
+					floatingLabelText="每磅料可做盒"
+					underlined={false}
+					disabled={true}
+					/>	
+			</div>
+			<div className="form">
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.costPerBox) || undefined}
+					floatingLabelText="每個盒淨料錢"
+					underlined={false}
+					disabled={true}
+					/>
+				<TextField
+					className="text-field even"
+					value={this.roundToCurrency(calc.totalCostPerBox) || undefined}
+					floatingLabelText="每個盒总料錢"
+					underlined={false}
+					disabled={true}
+					/>
+			</div>
+		</div>
+	}
+
     render() {
+    	let isManagerView = location.pathname === '/manager'
     	let { fields, handleSubmit } = this.props
 
         return (
         	<div className="app sample">
+        		<div className="form">
+        			<TextField
+						className="text-field even"
+						{...fields.client}
+						floatingLabelText="Company Name"
+						/>
+					<TextField
+						className="text-field even"
+						{...fields.date}
+						floatingLabelText="Date"
+						/>
+        		</div>
         		<div className="form">
 					<SelectField
 						className="text-field"
@@ -88,20 +215,18 @@ class SamplePage extends React.Component {
 						<MenuItem disabled value="PVC - 圆筒摺盒" primaryText="PVC - 圆筒摺盒"></MenuItem>
 						<MenuItem disabled value="PVC - 苹果批" primaryText="PVC - 苹果批"></MenuItem>
 					</SelectField>
-					{	
-						this.hideThicknessField(fields.material) ? undefined : (
-						<div className="text-field">
-							<SelectField floatingLabelText="料厚"
-								value={fields.thickness.value}
-								onChange={(ev, index, value) => { fields.thickness.onChange(value) }}>
-								{
-									_.pairs(thickness).map(([thickness, inches]) => {
-										return <MenuItem primaryText={thickness} value={thickness} key={thickness}></MenuItem>
-									})
-								}
-							</SelectField>
-						</div>)
-					}
+					<div className="text-field">
+						<SelectField floatingLabelText="料厚"
+							value={fields.thickness.value}
+							disabled={this.hideThicknessField(fields.material)}
+							onChange={(ev, index, value) => { fields.thickness.onChange(value) }}>
+							{
+								_.pairs(thickness).map(([thickness, inches]) => {
+									return <MenuItem primaryText={thickness} value={thickness} key={thickness}></MenuItem>
+								})
+							}
+						</SelectField>
+					</div>
 				</div>
         		<div className="form">
 					<TextField
@@ -120,39 +245,39 @@ class SamplePage extends React.Component {
 						floatingLabelText="高"
 						/>
 				</div>
-				<div className="form">
-					<TextField
-						className="text-field even"
-						floatingLabelText="啤粘" 
-						{...fields['啤粘']} />
-					<TextField
-						className="text-field even"
-						floatingLabelText="印刷"
-						{...fields['印刷']} />
-					<TextField
-						className="text-field even"
-						floatingLabelText="专色"
-						{...fields['专色']} />
-					<TextField
-						className="text-field even"
-						floatingLabelText="丝印"
-						{...fields['丝印']} />
-					<TextField
-						className="text-field even"
-						floatingLabelText="烫金"
-						{...fields['烫金']} />
-				</div>
+				{ isManagerView ? 
+					<div className="form">
+						<TextField
+							className="text-field even"
+							floatingLabelText="啤粘" 
+							{...fields['啤粘']} />
+						<TextField
+							className="text-field even"
+							floatingLabelText="印刷"
+							{...fields['印刷']} />
+						<TextField
+							className="text-field even"
+							floatingLabelText="专色"
+							{...fields['专色']} />
+						<TextField
+							className="text-field even"
+							floatingLabelText="丝印"
+							{...fields['丝印']} />
+						<TextField
+							className="text-field even"
+							floatingLabelText="烫金"
+							{...fields['烫金']} />
+					</div> : undefined
+				}
+				{
+					isManagerView ? this.renderResultsArea(fields) : undefined
+				}
 				<div className="form">
 					<Subheader title="订单资料"></Subheader>
 					<TextField
 						className="text-field even"
 						{...fields.description}
 						floatingLabelText="Description"
-						/>
-					<TextField
-						className="text-field even"
-						{...fields.type}
-						floatingLabelText="Type"
 						/>
 				</div>
 				<div className="form">
@@ -180,12 +305,13 @@ class SamplePage extends React.Component {
 						className="text-field even"
 						floatingLabelText="Price (Before shipping)" 
 						disabled={true}
-						value={ this.roundToCurrency(parseFloat(fields.quantity.value) * this.calculatePrice(fields)) || undefined }
+						value={ this.roundToCurrency(parseFloat(fields.quantity.value) * this.calculatePrice(fields).totalCostPerBox) || undefined }
 						 />
 					<TextField
 						className="text-field even"
 						floatingLabelText="Price per Pieces"
-						value={ this.roundToCurrency(this.calculatePrice(fields)) || undefined } />
+						disabled={true}
+						value={ this.roundToCurrency(this.calculatePrice(fields).totalCostPerBox) || undefined } />
 					<TextField
 						className="text-field even"
 						floatingLabelText="Cost of shipping method"
@@ -206,6 +332,7 @@ const style = {
 }
 
 const fields = {
+	'client': undefined,
 	'length': undefined, 
 	'width': undefined, 
 	'height': undefined,
@@ -225,7 +352,8 @@ const fields = {
 	priceBeforeShipping: undefined,
 	pricePerPieces: undefined,
 	costOfShippingMethod: undefined,
-	shippingMethod: undefined
+	shippingMethod: undefined,
+	'date': moment().format('D MMMM YYYY')
 }
 
 export default reduxForm({

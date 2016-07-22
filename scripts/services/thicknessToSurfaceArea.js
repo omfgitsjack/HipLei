@@ -18,6 +18,6 @@ export default function(thickness) {
 		case 22: return 859
 		case 23: return 822
 		case 24: return 788
-		default: return -1
+		default: return undefined
 	}
 }

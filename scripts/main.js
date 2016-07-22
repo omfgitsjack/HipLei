@@ -38,6 +38,10 @@ var routes = (
 				</Route>
 				<Route path="/sample" component={SamplePage}>
 				</Route>
+				<Route path="/staff" component={SamplePage}>
+				</Route>
+				<Route path="/manager" component={SamplePage}>
+				</Route>
 
 			</Router>
 	  	</Provider>
